@@ -33,7 +33,7 @@ export default function Testimonials() {
           : 'bg-gradient-to-r from-blue-50 to-purple-50'
       }`}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}

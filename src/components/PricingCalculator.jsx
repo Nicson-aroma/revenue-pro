@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function PricingCalculator({ services }) {
@@ -47,9 +48,9 @@ export default function PricingCalculator({ services }) {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="py-20 px-4 bg-gradient-to-br from-gray-50 via-white to-gray-50"
+      className="py-20 px-4 bg-linear-to-br from-gray-50 via-white to-gray-50"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold text-gray-900 mb-4">💰 Pricing Calculator</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -85,7 +86,7 @@ export default function PricingCalculator({ services }) {
                   <div className="ml-4 flex-1">
                     <p className="font-semibold text-gray-900">{service.name}</p>
                     <p className="text-sm text-gray-600">
-                      ${calculatePrice(service, volume)}/month
+                      ${calculatePrice(service, volume).toFixed(2)} {billingCycle === 'yearly' ? '/year' : '/month'}
                     </p>
                   </div>
                   <div className="text-2xl">{service.image}</div>
@@ -93,26 +94,7 @@ export default function PricingCalculator({ services }) {
               ))}
             </div>
 
-            {/* Volume Selector */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-3">
-                Contacts/Volume: {volume.toLocaleString()}
-              </label>
-              <motion.input
-                type="range"
-                min="1000"
-                max="500000"
-                step="1000"
-                value={volume}
-                onChange={(e) => setVolume(Number(e.target.value))}
-                className="w-full h-3 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-blue-600"
-              />
-              <div className="flex justify-between text-xs text-gray-600 mt-2">
-                <span>1K</span>
-                <span>250K</span>
-                <span>500K</span>
-              </div>
-            </div>
+            {/* Volume Selector removed per request */}
           </motion.div>
 
           {/* Right: Total & Billing */}
@@ -120,7 +102,7 @@ export default function PricingCalculator({ services }) {
             initial={{ x: 50, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl p-8 shadow-lg text-white h-fit sticky top-24"
+            className="bg-linear-to-br from-blue-600 to-purple-600 rounded-2xl p-8 shadow-lg text-white h-fit sticky top-24"
           >
             <h3 className="text-2xl font-bold mb-6">Summary</h3>
 
@@ -198,14 +180,16 @@ export default function PricingCalculator({ services }) {
             </div>
 
             {/* CTA */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              disabled={selectedServices.length === 0}
-              className="w-full bg-white text-blue-600 py-3 rounded-lg font-bold hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Get Quote
-            </motion.button>
+            <Link to="/contact" className="block">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                disabled={selectedServices.length === 0}
+                className="w-full bg-white text-blue-600 py-3 rounded-lg font-bold hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Get Quote
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
       </div>

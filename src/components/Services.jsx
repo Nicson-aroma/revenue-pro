@@ -32,7 +32,7 @@ export default function Services() {
 
   return (
     <section id="services" className={`py-20 px-4 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -93,7 +93,7 @@ export default function Services() {
 
               <div className="mb-6">
                 <span className="text-3xl font-bold text-blue-600">${service.price}</span>
-                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>/month</span>
+                <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>Starting price</p>
               </div>
 
               <motion.button

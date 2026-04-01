@@ -33,7 +33,7 @@ export default function ServiceModal({ service, onClose }) {
           <motion.div
             initial={{ y: -20 }}
             animate={{ y: 0 }}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-white relative"
+            className="bg-linear-to-r from-blue-600 to-purple-600 p-8 text-white relative"
           >
             <motion.button
               whileHover={{ scale: 1.2, rotate: 90 }}
@@ -105,7 +105,7 @@ export default function ServiceModal({ service, onClose }) {
                     <motion.span
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ delay: 0.3 + idx * 0.05, duration: 0.6 }}
-                      className="text-green-500 text-xl flex-shrink-0 mt-1"
+                      className="text-green-500 text-xl shrink-0 mt-1"
                     >
                       ✓
                     </motion.span>
@@ -133,25 +133,33 @@ export default function ServiceModal({ service, onClose }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 + idx * 0.05 }}
                     whileHover={{ x: 5 }}
-                    className={`flex justify-between items-center p-4 rounded-lg transition ${
+                    className={`p-4 rounded-lg transition ${
                       isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-50 hover:bg-gray-100'
                     }`}
                   >
-                    <div>
+                    <div className="flex items-center justify-between mb-2">
                       <p className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                         {plan.tier}
                       </p>
-                      <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                        {plan.contacts || plan.workflows || plan.domains || plan.campaigns}
-                      </p>
+                      <motion.p
+                        animate={{ color: ['#3b82f6', '#8b5cf6', '#3b82f6'] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className="text-xl font-bold text-blue-600"
+                      >
+                        {typeof plan.price === 'number' ? `$${plan.price}` : plan.price}
+                      </motion.p>
                     </div>
-                    <motion.p
-                      animate={{ color: ['#3b82f6', '#8b5cf6', '#3b82f6'] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="text-xl font-bold text-blue-600"
-                    >
-                      {typeof plan.price === 'number' ? `$${plan.price}` : plan.price}
-                    </motion.p>
+                    {plan.bullets ? (
+                      <ul className={isDarkMode ? 'text-gray-300 list-disc list-inside space-y-1' : 'text-gray-600 list-disc list-inside space-y-1'}>
+                        {plan.bullets.map((bullet, bidx) => (
+                          <li key={bidx}>{bullet}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                        {plan.description || ''}
+                      </p>
+                    )}
                   </motion.div>
                 ))}
               </div>

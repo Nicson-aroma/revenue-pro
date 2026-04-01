@@ -7,12 +7,18 @@ export default function ServiceFilter({ services, onFilter }) {
   const [maxPrice, setMaxPrice] = useState(500);
 
   const handleFilter = () => {
-    const filtered = services.filter(service => {
-      const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           service.shortDesc.toLowerCase().includes(searchTerm.toLowerCase());
+    let filtered = services;
+    if (searchTerm.trim() !== '') {
+      filtered = filtered.filter(service => {
+        const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                             service.shortDesc.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesSearch;
+      });
+    }
+    filtered = filtered.filter(service => {
       const matchesRating = service.rating >= selectedRating;
       const matchesPrice = service.price <= maxPrice;
-      return matchesSearch && matchesRating && matchesPrice;
+      return matchesRating && matchesPrice;
     });
     onFilter(filtered);
   };
@@ -39,7 +45,7 @@ export default function ServiceFilter({ services, onFilter }) {
       initial={{ opacity: 0, y: -20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 mb-8 shadow-lg"
+      className="bg-linear-to-r from-blue-50 to-purple-50 rounded-2xl p-8 mb-8 shadow-lg"
     >
       <h3 className="text-2xl font-bold text-gray-900 mb-6">🔍 Filter Services</h3>
 
@@ -104,7 +110,7 @@ export default function ServiceFilter({ services, onFilter }) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleFilter}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:shadow-lg transition font-semibold"
+            className="w-full bg-linear-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:shadow-lg transition font-semibold"
           >
             Apply Filters
           </motion.button>

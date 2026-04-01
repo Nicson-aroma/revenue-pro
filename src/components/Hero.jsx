@@ -1,5 +1,7 @@
+
 import { motion } from 'framer-motion';
 import { useDarkMode } from '../context/DarkModeContext';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   const { isDarkMode } = useDarkMode();
@@ -38,7 +40,7 @@ export default function Hero() {
           : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'
       }`}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left content */}
           <motion.div
@@ -71,26 +73,28 @@ export default function Hero() {
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4 mb-12"
             >
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection('contact')}
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition text-lg font-semibold"
-              >
-                Start Your Campaign
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection('services')}
-                className={`border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg transition text-lg font-semibold ${
-                  isDarkMode
-                    ? 'hover:bg-gray-800 hover:border-blue-500'
-                    : 'hover:bg-blue-50'
-                }`}
-              >
-                View Services
-              </motion.button>
+              <Link to="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition text-lg font-semibold"
+                >
+                  Start Your Campaign
+                </motion.button>
+              </Link>
+              <Link to="/services">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg transition text-lg font-semibold ${
+                    isDarkMode
+                      ? 'hover:bg-gray-800 hover:border-blue-500'
+                      : 'hover:bg-blue-50'
+                  }`}
+                >
+                  View Services
+                </motion.button>
+              </Link>
             </motion.div>
 
             <motion.div

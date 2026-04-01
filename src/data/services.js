@@ -1,171 +1,241 @@
 export const services = [
   {
     id: 1,
-    name: 'Email Campaign',
-    title: 'Professional Email Campaign',
-    shortDesc: 'Design and execute targeted email campaigns',
-    description: 'Professional email campaign service with advanced segmentation, A/B testing, and detailed analytics. Perfect for reaching your audience with personalized messaging.',
-    rating: 4.8,
-    reviews: 142,
+    name: 'Email Campaign Management',
+    title: 'Email Campaign Management',
+    shortDesc: 'Strategy + setup + reporting',
+    description: 'Complete campaign strategy, setup, and reporting for high open/click ROI.',
+    rating: 4.9,
+    reviews: 180,
     features: [
-      'Unlimited email sends',
-      'Advanced audience segmentation',
-      'A/B testing capabilities',
-      'Professional templates',
-      'Detailed analytics & reporting',
-      'Click tracking and heatmaps',
-      'Mobile-responsive design',
-      'Dedicated support'
+      'Email campaign setup',
+      'Audience strategy (goal + segmentation)',
+      'Email scheduling',
+      'Performance reporting (opens/clicks)'
     ],
-    price: 299,
     pricing: [
-      { tier: 'Starter', contacts: 'Up to 5K', price: 29 },
-      { tier: 'Professional', contacts: 'Up to 25K', price: 79 },
-      { tier: 'Business', contacts: 'Up to 100K', price: 199 },
-      { tier: 'Enterprise', contacts: 'Unlimited', price: 'Custom' }
+      {
+        tier: 'Basic',
+        price: 29,
+        bullets: [
+          '1 email campaign setup',
+          'Basic campaign strategy (goal + audience)',
+          'Email scheduling',
+          'Basic report (open + click rate)'
+        ]
+      },
+      {
+        tier: 'Standard',
+        price: 49,
+        bullets: [
+          'Up to 3 email campaigns',
+          'Advanced segmentation + targeting',
+          'A/B subject line testing',
+          'Campaign optimization',
+          'Detailed report (CTR, insights, recommendations)'
+        ]
+      }
     ],
-    image: '📧',
+    image: '🚀',
     icon: '✉️'
   },
   {
     id: 2,
-    name: 'Email Automation',
-    title: 'Email Automation Setup',
-    rating: 4.9,
-    reviews: 156,
-    shortDesc: 'Automate your email workflows and customer journeys',
-    description: 'Complete email automation setup service. We configure workflows for welcome sequences, abandoned cart recovery, customer retention, and more. Save time while increasing conversions.',
+    name: 'MailerLite Account Setup',
+    title: 'MailerLite Account Setup',
+    shortDesc: 'Authentication + list import + segmentation + automation',
+    description: 'Kickoff with full MailerLite account setup and deliverability optimization.',
+    rating: 4.8,
+    reviews: 120,
     features: [
-      'Welcome series automation',
-      'Abandoned cart recovery',
-      'Customer retention flows',
-      'Lead nurturing sequences',
-      'Behavioral triggers',
-      'Custom workflow builder',
-      'Integration with CRM',
-      '24/7 monitoring & optimization'
+      'Account setup & verification',
+      'SPF/DKIM authentication',
+      'Subscriber import + cleanup',
+      'Advanced segmentation setup',
+      'Automation starter workflow'
     ],
-    price: 499,
     pricing: [
-      { tier: 'Starter', workflows: 'Up to 3', price: 49 },
-      { tier: 'Professional', workflows: 'Up to 10', price: 149 },
-      { tier: 'Business', workflows: 'Up to 25', price: 299 },
-      { tier: 'Enterprise', workflows: 'Unlimited', price: 'Custom' }
+      {
+        tier: 'Basic',
+        price: 19,
+        bullets: [
+          'MailerLite account setup',
+          'Domain authentication (SPF, DKIM)',
+          'Subscriber import (limited)',
+          'Basic segmentation'
+        ]
+      },
+      {
+        tier: 'Standard',
+        price: 29,
+        bullets: [
+          'Full account configuration',
+          'Advanced deliverability tweaks',
+          'Large list import + cleanup guidance',
+          'Behavior-based segmentation',
+          'Welcome automation setup'
+        ]
+      }
     ],
-    image: '🤖',
-    icon: '⚙️'
+    image: '⚙️',
+    icon: '🔧'
   },
   {
     id: 3,
-    name: 'Email Authentication',
-    title: 'Email Authentication & Deliverability',
-    rating: 4.7,
-    reviews: 98,
-    shortDesc: 'Ensure your emails reach the inbox with proper authentication',
-    description: 'Complete email authentication setup including SPF, DKIM, DMARC, and domain reputation management. Improve deliverability and protect your brand.',
+    name: 'Email Automation Setup',
+    title: 'Email Automation Setup',
+    shortDesc: 'Welcome / cart-abandon / nurture / re-engagement flows',
+    description: 'Workflow automation that converts and nurtures leads consistently.',
+    rating: 4.9,
+    reviews: 156,
     features: [
-      'SPF configuration',
-      'DKIM setup & management',
-      'DMARC policy implementation',
-      'Domain reputation monitoring',
-      'Bounce management',
-      'Spam score testing',
-      'Blacklist monitoring',
-      'Deliverability optimization'
+      'Welcome automation',
+      'Abandoned cart sequence',
+      'Nurture workflows',
+      'Re-engagement triggers',
+      'Performance tracking setup'
     ],
-    price: 199,
     pricing: [
-      { tier: 'Basic', domains: '1 domain', price: 19 },
-      { tier: 'Professional', domains: 'Up to 5', price: 59 },
-      { tier: 'Business', domains: 'Up to 20', price: 149 },
-      { tier: 'Enterprise', domains: 'Unlimited', price: 'Custom' }
+      {
+        tier: 'Basic',
+        price: 29,
+        bullets: [
+          '1 automation workflow (welcome)',
+          '2-3 email series',
+          'Basic triggers',
+          'Initial testing'
+        ]
+      },
+      {
+        tier: 'Standard',
+        price: 49,
+        bullets: [
+          'Up to 2 workflows',
+          '3-5 email sequence each',
+          'Behavior-based triggers',
+          'Optimization + A/B testing',
+          'Tracking dashboard setup'
+        ]
+      }
     ],
-    image: '🔐',
-    icon: '🛡️'
+    image: '🔁',
+    icon: '🤖'
   },
   {
     id: 4,
     name: 'Email Template Design',
-    title: 'Custom Email Template Design',
+    title: 'Email Template Design',
+    shortDesc: 'Responsive branded templates (HTML / drag-drop)',
+    description: 'High-converting templates that look great on every device.',
     rating: 4.9,
     reviews: 127,
-    shortDesc: 'Get professionally designed email templates',
-    description: 'Custom-designed email templates tailored to your brand. Responsive, tested across clients, and optimized for conversions.',
     features: [
-      'Brand customization',
-      'Responsive design',
-      'Mobile optimization',
-      'Unlimited revisions',
-      'Template library access',
-      'AMP for email support',
-      'Dark mode compatibility',
-      'Client testing & approval'
+      'Mobile-first design',
+      'Brand consistency',
+      'Drag & drop + HTML output',
+      'Editable template library'
     ],
-    price: 399,
     pricing: [
-      { tier: 'Single Template', templates: 1, price: 39 },
-      { tier: 'Starter Pack', templates: 3, price: 99 },
-      { tier: 'Professional Pack', templates: 10, price: 299 },
-      { tier: 'Enterprise License', templates: 'Unlimited', price: 'Custom' }
+      {
+        tier: 'Basic',
+        price: 19,
+        bullets: [
+          '1 responsive template',
+          'Simple brand design',
+          'Mobile-friendly',
+          'Drag-and-drop ready'
+        ]
+      },
+      {
+        tier: 'Standard',
+        price: 39,
+        bullets: [
+          '3 templates',
+          'Full brand style + visuals',
+          'Advanced layout + CTA design',
+          'Editable in MailerLite',
+          'Desktop + mobile optimized'
+        ]
+      }
     ],
     image: '🎨',
     icon: '🖌️'
   },
   {
     id: 5,
-    name: 'List Management',
-    title: 'Email List Management & Cleaning',
-    rating: 4.6,
-    reviews: 84,
-    shortDesc: 'Maintain a healthy, engaged email list',
-    description: 'Professional list management service including validation, deduplication, segmentation, and continuous engagement monitoring.',
+    name: 'Email Signature Design',
+    title: 'Email Signature Design',
+    shortDesc: 'Professional clickable signatures (Gmail/Outlook support)',
+    description: 'Branded signatures that look polished across email clients.',
+    rating: 4.8,
+    reviews: 90,
     features: [
-      'Email validation & verification',
-      'Duplicate removal',
-      'Invalid address detection',
-      'List segmentation',
-      'Engagement scoring',
-      'Inactive subscriber management',
-      'GDPR compliance tools',
-      'Monthly list health reports'
+      'High-conversion signature design',
+      'Clickable links',
+      'Social profile icons',
+      'Cross-client compatibility'
     ],
-    price: 149,
     pricing: [
-      { tier: 'Starter', contacts: 'Up to 10K', price: 14 },
-      { tier: 'Professional', contacts: 'Up to 50K', price: 49 },
-      { tier: 'Business', contacts: 'Up to 250K', price: 149 },
-      { tier: 'Enterprise', contacts: 'Unlimited', price: 'Custom' }
+      {
+        tier: 'Basic',
+        price: 9,
+        bullets: [
+          '1 signature design',
+          'Contact info + links',
+          'Gmail/Outlook compatible'
+        ]
+      },
+      {
+        tier: 'Standard',
+        price: 19,
+        bullets: [
+          'Custom premium style',
+          'Social icon + branding',
+          'Logo integration',
+          'Setup guide for Gmail/Outlook'
+        ]
+      }
     ],
-    image: '📋',
-    icon: '☑️'
+    image: '✍️',
+    icon: '🖊️'
   },
   {
     id: 6,
-    name: 'Analytics & Reporting',
-    title: 'Advanced Analytics & Reporting',
-    rating: 4.8,
-    reviews: 119,
-    shortDesc: 'Get deep insights into your email performance',
-    description: 'Comprehensive analytics and reporting platform with custom dashboards, predictive analytics, and actionable insights.',
+    name: 'Client-Based Setup (Done-With-You)',
+    title: 'Client-Based Setup (Done-With-You)',
+    shortDesc: 'Account setup in client’s account + training',
+    description: 'Hands-on MailerLite setup in your account with live training.',
+    rating: 4.9,
+    reviews: 60,
     features: [
-      'Real-time performance tracking',
-      'Custom dashboards',
-      'Predictive analytics',
-      'Cohort analysis',
-      'Revenue attribution',
-      'Competitor benchmarking',
-      'Automated reports',
-      'Data export & integration'
+      'Account configuration',
+      'Live walkthrough',
+      'Automation onboarding',
+      'Best-practice coaching'
     ],
-    price: 399,
     pricing: [
-      { tier: 'Starter', campaigns: 'Up to 10/month', price: 39 },
-      { tier: 'Professional', campaigns: 'Up to 50/month', price: 99 },
-      { tier: 'Business', campaigns: 'Up to 200/month', price: 299 },
-      { tier: 'Enterprise', campaigns: 'Unlimited', price: 'Custom' }
+      {
+        tier: 'Basic',
+        price: 19,
+        bullets: [
+          'Account setup in your workspace',
+          'Walkthrough (recorded/live)',
+          'Initial campaign help'
+        ]
+      },
+      {
+        tier: 'Standard',
+        price: 39,
+        bullets: [
+          'Full customization',
+          'Live training session',
+          'Automation walkthrough',
+          'Q&A + best practice guide'
+        ]
+      }
     ],
-    image: '📊',
-    icon: '📈'
+    image: '🧑‍💼',
+    icon: '👨‍💼'
   }
 ];
 

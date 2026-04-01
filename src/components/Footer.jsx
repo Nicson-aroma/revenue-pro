@@ -1,5 +1,7 @@
+
 import { motion } from 'framer-motion';
 import { useDarkMode } from '../context/DarkModeContext';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const { isDarkMode } = useDarkMode();
@@ -36,7 +38,7 @@ export default function Footer() {
         isDarkMode ? 'bg-gray-900 text-gray-300' : 'bg-gray-800 text-gray-300'
       }`}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -85,23 +87,27 @@ export default function Footer() {
               Services
             </h4>
             <ul className="space-y-2">
-              {['Email Campaigns', 'Email Automation', 'Authentication', 'Template Design', 'Analytics'].map(
-                (service, idx) => (
-                  <motion.li
-                    key={idx}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 }}
+              {[
+                { label: 'Email Campaigns', path: '/services' },
+                { label: 'Email Automation', path: '/services' },
+                { label: 'Authentication', path: '/services' },
+                { label: 'Template Design', path: '/services' },
+                { label: 'Analytics', path: '/services' }
+              ].map((service, idx) => (
+                <motion.li
+                  key={idx}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <Link
+                    to={service.path}
+                    className={`hover:${isDarkMode ? 'text-blue-400' : 'text-blue-300'} transition`}
                   >
-                    <a
-                      href="#services"
-                      className={`hover:${isDarkMode ? 'text-blue-400' : 'text-blue-300'} transition`}
-                    >
-                      {service}
-                    </a>
-                  </motion.li>
-                )
-              )}
+                    {service.label}
+                  </Link>
+                </motion.li>
+              ))}
             </ul>
           </motion.div>
 
@@ -112,9 +118,9 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               {[
-                { label: 'Home', id: 'home' },
-                { label: 'Features', id: 'features' },
-                { label: 'Contact', id: 'contact' },
+                { label: 'Home', path: '/' },
+                { label: 'Features', path: '/features' },
+                { label: 'Contact', path: '/contact' }
               ].map((link, idx) => (
                 <motion.li
                   key={idx}
@@ -122,12 +128,12 @@ export default function Footer() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1 }}
                 >
-                  <button
-                    onClick={() => scrollToSection(link.id)}
+                  <Link
+                    to={link.path}
                     className={`hover:${isDarkMode ? 'text-blue-400' : 'text-blue-300'} transition text-left`}
                   >
                     {link.label}
-                  </button>
+                  </Link>
                 </motion.li>
               ))}
               {['Privacy Policy', 'Terms of Service'].map((link, idx) => (

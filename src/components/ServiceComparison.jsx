@@ -26,7 +26,7 @@ export default function ServiceComparison({ services }) {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="py-20 px-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+      className="py-20 px-4 bg-linear-to-br from-gray-900 via-gray-800 to-gray-900"
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
@@ -117,7 +117,7 @@ export default function ServiceComparison({ services }) {
                       >
                         <p className="text-white font-bold text-xl">
                           ${service.price}
-                          <span className="text-sm text-gray-400">/month</span>
+                          <span className="text-sm text-gray-400">per order</span>
                         </p>
                       </motion.td>
                     ))}
@@ -185,7 +185,7 @@ export default function ServiceComparison({ services }) {
                 <motion.tr
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  className="bg-gradient-to-r from-blue-600/30 to-purple-600/30"
+                  className="bg-linear-to-r from-blue-600/30 to-purple-600/30"
                 >
                   <td className="p-6"></td>
                   <AnimatePresence>
