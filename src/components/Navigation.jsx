@@ -1,99 +1,92 @@
-
 import { useState } from 'react';
-import { useDarkMode } from '../context/DarkModeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { useClerk, useUser } from '@clerk/react';
+import { useDarkMode } from '../context/DarkModeContext';
+import logoImage from '../assets/new-logo.png';
+
+const navItems = [
+  { name: 'Home', path: '/', icon: 'H' },
+  { name: 'Case Studies', path: '/portfolio', icon: 'C' },
+  { name: 'Services', path: '/services', icon: 'S' },
+  { name: 'Pricing', path: '/pricing', icon: 'P' },
+  { name: 'Contact', path: '/contact', icon: 'C' },
+];
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isDarkMode, toggleDarkMode } = useDarkMode();
-  const { user, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
   const { signOut } = useClerk();
-  const [showNotification, setShowNotification] = useState(false);
-
-
   const location = useLocation();
 
-  const handleLiveChat = () => {
-    setShowNotification(true);
-    setTimeout(() => setShowNotification(false), 3000);
-  };
-
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 w-full ${isDarkMode ? 'bg-gray-900/95' : 'bg-white/95'} backdrop-blur shadow-sm z-50`}
+      className={`fixed top-0 z-50 w-full backdrop-blur shadow-sm ${
+        isDarkMode ? 'bg-gray-900/95' : 'bg-white/95'
+      }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <Link to="/" className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-blue-600">📧</span>
-              <span className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                MailRevenuePro
-              </span>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-0">
+        <div className="flex h-16 items-center justify-between">
+          <motion.div whileHover={{ scale: 1.04 }} className="flex items-center gap-2">
+            <Link to="/" className="flex items-center" onClick={closeMenu}>
+              <img src={logoImage} alt="MailRevenuePro" className="h-11 w-auto" />
             </Link>
           </motion.div>
 
-          {/* Desktop menu */}
-          <div className={`hidden md:flex gap-8 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            {[
-              { name: 'Home', path: '/', icon: '🏠' },
-              { name: 'Portfolio', path: '/portfolio', icon: '📁' },
-              { name: 'Services', path: '/services', icon: '📧' },
-              { name: 'Compare', path: '/comparison', icon: '⚖️' },
-              { name: 'Calculator', path: '/calculator', icon: '💰' },
-              { name: 'Features', path: '/features', icon: '✨' },
-              { name: 'Contact', path: '/contact', icon: '📞' }
-            ].map((item, idx) => (
+          <div className={`hidden gap-8 md:flex ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            {navItems.map((item, idx) => (
               <motion.div
                 key={item.path}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                whileHover={{ scale: 1.1 }}
+                transition={{ delay: idx * 0.08 }}
+                whileHover={{ scale: 1.06 }}
               >
                 <Link
                   to={item.path}
-                  className={`hover:text-blue-600 transition font-medium flex items-center gap-1 ${location.pathname === item.path ? 'text-blue-600 font-bold' : ''}`}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={closeMenu}
+                  className={`flex items-center gap-2 font-medium transition hover:text-purple-500 ${
+                    location.pathname === item.path ? 'font-bold text-purple-500' : ''
+                  }`}
                 >
-                  <span className="text-sm">{item.icon}</span>
-                  <span className="hidden lg:inline ">{item.name}</span>
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full border border-current text-[10px]">
+                    {item.icon}
+                  </span>
+                  <span className="hidden lg:inline">{item.name}</span>
                 </Link>
               </motion.div>
             ))}
           </div>
 
-          {/* Right side buttons (Auth + Dark Mode) */}
-          <div className="hidden sm:flex gap-3 items-center">
+          <div className="hidden items-center gap-3 sm:flex">
             <button
               onClick={toggleDarkMode}
-              className={`px-3 py-2 rounded-lg border ${isDarkMode ? 'border-gray-300 text-white bg-gray-700' : 'border-gray-300 text-gray-700 bg-white'} hover:opacity-90 transition`}
+              className={`rounded-lg border px-3 py-2 transition hover:opacity-90 ${
+                isDarkMode
+                  ? 'border-gray-300 bg-gray-700 text-white'
+                  : 'border-gray-300 bg-white text-gray-700'
+              }`}
               aria-label="Toggle Dark Mode"
             >
-              {isDarkMode ? '🌙' : '☀️'}
+              {isDarkMode ? 'Moon' : 'Sun'}
             </button>
             {isSignedIn ? (
               <>
                 <Link
                   to="/dashboard"
-                  className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition font-semibold"
+                  className="rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:bg-purple-700"
                 >
                   Dashboard
                 </Link>
                 <button
                   onClick={() => signOut()}
-                  className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition font-semibold"
+                  className="rounded-lg bg-red-600 px-4 py-2 font-semibold text-white transition hover:bg-red-700"
                 >
                   Logout
                 </button>
@@ -102,13 +95,13 @@ export default function Navigation() {
               <>
                 <Link
                   to="/login"
-                  className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition font-semibold"
+                  className="rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:bg-purple-700"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-semibold"
+                  className="rounded-lg bg-emerald-600 px-4 py-2 font-semibold text-white transition hover:bg-emerald-700"
                 >
                   Sign Up
                 </Link>
@@ -116,47 +109,45 @@ export default function Navigation() {
             )}
           </div>
 
-          {/* Mobile menu button */}
           <button
-            className={`md:hidden text-2xl ${isDarkMode ? 'text-white' : 'text-gray-600'}`}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={`text-2xl md:hidden ${isDarkMode ? 'text-white' : 'text-gray-600'}`}
+            onClick={() => setIsMenuOpen((open) => !open)}
+            aria-label="Toggle menu"
           >
-            ☰
+            =
           </button>
         </div>
 
-        {/* Mobile menu */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className={`md:hidden pb-4 border-t ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}
+              className={`border-t pb-4 md:hidden ${
+                isDarkMode ? 'border-gray-700' : 'border-gray-200'
+              }`}
             >
-              {[
-                { name: 'Home', path: '/' },
-                { name: 'Portfolio', path: '/portfolio' },
-                { name: 'Services', path: '/services' },
-                { name: 'Compare', path: '/comparison' },
-                { name: 'Calculator', path: '/calculator' },
-                { name: 'Features', path: '/features' },
-                { name: 'Contact', path: '/contact' }
-              ].map((item) => (
+              {navItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block w-full text-left py-2 ${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}
+                  onClick={closeMenu}
+                  className={`block w-full py-2 text-left ${
+                    isDarkMode ? 'text-gray-300 hover:text-purple-300' : 'text-gray-600 hover:text-purple-600'
+                  }`}
                 >
                   {item.name}
                 </Link>
-              ))}              <button
+              ))}
+              <button
                 onClick={() => {
                   toggleDarkMode();
-                  setIsMenuOpen(false);
+                  closeMenu();
                 }}
-                className={`block w-full text-left py-2 ${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}
+                className={`block w-full py-2 text-left ${
+                  isDarkMode ? 'text-gray-300 hover:text-purple-300' : 'text-gray-600 hover:text-purple-600'
+                }`}
               >
                 {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               </button>
@@ -164,17 +155,21 @@ export default function Navigation() {
                 <>
                   <Link
                     to="/dashboard"
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`block w-full text-left py-2 ${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}
+                    onClick={closeMenu}
+                    className={`block w-full py-2 text-left ${
+                      isDarkMode ? 'text-gray-300 hover:text-purple-300' : 'text-gray-600 hover:text-purple-600'
+                    }`}
                   >
                     Dashboard
                   </Link>
                   <button
                     onClick={() => {
                       signOut();
-                      setIsMenuOpen(false);
+                      closeMenu();
                     }}
-                    className={`block w-full text-left py-2 ${isDarkMode ? 'text-gray-300 hover:text-red-400' : 'text-gray-600 hover:text-red-600'}`}
+                    className={`block w-full py-2 text-left ${
+                      isDarkMode ? 'text-gray-300 hover:text-red-400' : 'text-gray-600 hover:text-red-600'
+                    }`}
                   >
                     Logout
                   </button>
@@ -183,34 +178,24 @@ export default function Navigation() {
                 <>
                   <Link
                     to="/login"
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`block w-full text-left py-2 ${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}
+                    onClick={closeMenu}
+                    className={`block w-full py-2 text-left ${
+                      isDarkMode ? 'text-gray-300 hover:text-purple-300' : 'text-gray-600 hover:text-purple-600'
+                    }`}
                   >
                     Sign In
                   </Link>
                   <Link
                     to="/register"
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`block w-full text-left py-2 ${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}`}
+                    onClick={closeMenu}
+                    className={`block w-full py-2 text-left ${
+                      isDarkMode ? 'text-gray-300 hover:text-purple-300' : 'text-gray-600 hover:text-purple-600'
+                    }`}
                   >
                     Sign Up
                   </Link>
                 </>
               )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Notification */}
-        <AnimatePresence>
-          {showNotification && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="absolute top-20 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg font-semibold"
-            >
-              💬 A chat agent will be with you shortly!
             </motion.div>
           )}
         </AnimatePresence>
