@@ -16,14 +16,19 @@ export const sendContactForm = async (formData) => {
       EMAILJS_TEMPLATE_ID,
       {
         to_email: 'newjhsayem@gmail.com',
+        selected_date: formData.selectedDate,
+        selected_time: formData.selectedTime,
         from_name: formData.fullName,
         from_email: formData.email,
         phone: formData.phone,
         company: formData.company,
+        monthly_revenue: formData.monthlyRevenue,
+        business_type: formData.businessType,
         service: formData.selectedService,
         budget: formData.budget,
         timeline: formData.timeline,
         contact_method: formData.preferredContact,
+        current_challenges: formData.currentChallenges,
         message: formData.projectDetails,
       }
     );
