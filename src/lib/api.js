@@ -9,7 +9,7 @@ function resolveApiBaseUrl() {
     return 'http://localhost:5000/api';
   }
 
-  return 'https://mailrevenue-pro.onrender.com/api';
+  return 'https://mail-revenue-pro.onrender.com/api';
 }
 
 const API_BASE_URL = resolveApiBaseUrl();
