@@ -9,7 +9,14 @@ const app = express();
 
 app.use(
   cors({
-    origin: env.clientOrigin,
+    origin(origin, callback) {
+      if (!origin || env.clientOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
   })
 );
 app.use(express.json());

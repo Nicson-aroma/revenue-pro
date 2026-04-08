@@ -1,4 +1,18 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '') || 'http://localhost:5000/api';
+function resolveApiBaseUrl() {
+  const configuredUrl = import.meta.env.VITE_API_URL?.trim();
+
+  if (configuredUrl) {
+    return configuredUrl.replace(/\/$/, '');
+  }
+
+  if (import.meta.env.DEV) {
+    return 'http://localhost:5000/api';
+  }
+
+  return 'https://mailrevenue-pro.onrender.com/api';
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 const ADMIN_SESSION_KEY = 'mrp_admin_session_v2';
 
 export function getStoredAdminSession() {
@@ -37,10 +51,16 @@ function createHeaders(extraHeaders = {}) {
 }
 
 export async function apiRequest(path, options = {}) {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...options,
-    headers: createHeaders(options.headers),
-  });
+  let response;
+
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      ...options,
+      headers: createHeaders(options.headers),
+    });
+  } catch {
+    throw new Error('Cannot reach the admin API. Check the production API URL and CORS settings.');
+  }
 
   if (response.status === 204) {
     return null;
