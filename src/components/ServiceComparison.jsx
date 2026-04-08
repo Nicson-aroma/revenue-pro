@@ -78,7 +78,7 @@ export default function ServiceComparison({ services }) {
                 <tr className="border-b border-gray-700">
                   <th className="text-left p-6 text-gray-300 font-semibold w-1/4">Feature</th>
                   <AnimatePresence>
-                    {comparedServices.map((service, idx) => (
+                    {comparedServices.map((service) => (
                       <motion.th
                         key={service.id}
                         initial={{ opacity: 0 }}

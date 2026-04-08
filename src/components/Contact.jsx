@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { sendContactForm } from '../config/emailjs';
+import { EMAILJS_CONFIG_ERROR, hasEmailJsConfig, sendContactForm } from '../config/emailjs';
+import { saveContactSubmission } from '../lib/contactSubmissions';
 
 const serviceOptions = [
   'Full Email Management',
@@ -41,21 +42,7 @@ const monthlyRevenueOptions = [
   '$500K+ / month',
 ];
 
-const availableDates = [
-  { value: '2026-04-08', label: 'April 8, 2026' },
-  { value: '2026-04-09', label: 'April 9, 2026' },
-  { value: '2026-04-10', label: 'April 10, 2026' },
-  { value: '2026-04-13', label: 'April 13, 2026' },
-  { value: '2026-04-14', label: 'April 14, 2026' },
-];
-
-const timeSlotsByDate = {
-  '2026-04-08': ['10:00 AM', '12:00 PM', '3:00 PM'],
-  '2026-04-09': ['11:00 AM', '1:00 PM', '4:00 PM'],
-  '2026-04-10': ['9:30 AM', '12:30 PM', '2:30 PM'],
-  '2026-04-13': ['10:30 AM', '1:30 PM', '5:00 PM'],
-  '2026-04-14': ['9:00 AM', '11:30 AM', '3:30 PM'],
-};
+const defaultTimeSlots = ['10:00 AM', '12:00 PM', '3:00 PM'];
 
 const discoveryPoints = [
   'A quick review of your current campaigns, flows, design quality, and missed retention opportunities.',
@@ -164,6 +151,40 @@ function InputField({
   );
 }
 
+function formatDateLabel(date) {
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(date);
+}
+
+function toDateValue(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function getAvailableDates() {
+  const dates = [];
+  const cursor = new Date();
+  cursor.setHours(0, 0, 0, 0);
+
+  while (dates.length < 5) {
+    const weekday = cursor.getDay();
+    if (weekday !== 0 && weekday !== 6) {
+      dates.push({
+        value: toDateValue(cursor),
+        label: formatDateLabel(cursor),
+      });
+    }
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  return dates;
+}
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     selectedDate: '',
@@ -184,8 +205,9 @@ export default function Contact() {
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const availableDates = useMemo(() => getAvailableDates(), []);
 
-  const availableTimeSlots = formData.selectedDate ? timeSlotsByDate[formData.selectedDate] ?? [] : [];
+  const availableTimeSlots = formData.selectedDate ? defaultTimeSlots : [];
 
   const validateForm = () => {
     const nextErrors = {};
@@ -272,11 +294,29 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      await sendContactForm(formData);
+      let emailDeliveryStatus = 'skipped';
+
+      if (hasEmailJsConfig) {
+        await sendContactForm(formData);
+        emailDeliveryStatus = 'sent';
+      }
+
+      await saveContactSubmission(formData, { emailDeliveryStatus });
       setSubmitted(true);
       resetForm();
     } catch (error) {
       console.error('Error sending email:', error);
+      try {
+        const emailDeliveryStatus = error.message === EMAILJS_CONFIG_ERROR ? 'skipped' : 'failed';
+        await saveContactSubmission(formData, { emailDeliveryStatus });
+        if (emailDeliveryStatus === 'skipped') {
+          setSubmitted(true);
+          resetForm();
+          return;
+        }
+      } catch (saveError) {
+        console.error('Error saving lead:', saveError);
+      }
       alert('Failed to send message. Please try again.');
     } finally {
       setLoading(false);
@@ -373,6 +413,15 @@ export default function Contact() {
                       Thanks. We&apos;ll review your details and reach out shortly with the next step.
                     </p>
                   </motion.div>
+                ) : null}
+
+                {!hasEmailJsConfig ? (
+                  <div className="mt-6 rounded-[24px] border border-amber-200 bg-amber-50 p-6">
+                    <h3 className="text-xl font-bold text-amber-900">Form delivery is not configured</h3>
+                    <p className="mt-3 text-sm leading-6 text-amber-800">
+                      Leads will still be saved to the admin inbox. Add the `VITE_EMAILJS_*` variables and `VITE_CONTACT_TO_EMAIL` before using email delivery in production.
+                    </p>
+                  </div>
                 ) : null}
 
                 <form onSubmit={handleSubmit} className="mt-6 space-y-6">

@@ -6,11 +6,6 @@ import { Link } from 'react-router-dom';
 export default function Hero() {
   const { isDarkMode } = useDarkMode();
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

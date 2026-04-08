@@ -1,21 +1,28 @@
 import emailjs from '@emailjs/browser';
 
-// Initialize EmailJS with your public key
-// Get your PUBLIC KEY from emailjs.com dashboard
-const EMAILJS_PUBLIC_KEY = 'tJjg1g9Fqb8yFklRw';
-const EMAILJS_SERVICE_ID = 'service_iqzzw7z';
-const EMAILJS_TEMPLATE_ID = 'template_0asbruo';
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const CONTACT_TO_EMAIL = import.meta.env.VITE_CONTACT_TO_EMAIL;
+const hasEmailJsConfig = Boolean(
+  EMAILJS_PUBLIC_KEY && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && CONTACT_TO_EMAIL
+);
 
-// Initialize EmailJS
-emailjs.init(EMAILJS_PUBLIC_KEY);
+if (hasEmailJsConfig) {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+}
 
 export const sendContactForm = async (formData) => {
+  if (!hasEmailJsConfig) {
+    throw new Error('EmailJS is not configured. Set the VITE_EMAILJS_* and VITE_CONTACT_TO_EMAIL variables.');
+  }
+
   try {
     const response = await emailjs.send(
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID,
       {
-        to_email: 'newjhsayem@gmail.com',
+        to_email: CONTACT_TO_EMAIL,
         selected_date: formData.selectedDate,
         selected_time: formData.selectedTime,
         from_name: formData.fullName,
@@ -38,3 +45,6 @@ export const sendContactForm = async (formData) => {
     throw error;
   }
 };
+
+export { hasEmailJsConfig };
+export const EMAILJS_CONFIG_ERROR = 'EmailJS is not configured. Set the VITE_EMAILJS_* and VITE_CONTACT_TO_EMAIL variables.';

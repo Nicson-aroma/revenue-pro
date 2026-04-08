@@ -5,15 +5,10 @@ import abandonWorkflowImg from '../assets/abandon-workflow.png';
 import abandonCartImg from '../assets/abandone-cart-automation.png';
 import design1 from '../assets/design-1.png';
 import design2 from '../assets/design-2.png';
-import design3 from '../assets/design-3.png';
-import design4 from '../assets/design-4.png';
-import ecommercePerfImg from '../assets/e-commerce-performance.png';
 import heroImg from '../assets/hero.png';
 import monthlyStatsImg from '../assets/monthly-campaign-stats.png';
 import popup1Img from '../assets/pop-up-form.png';
 import popup2Img from '../assets/pop-up-form-2.png';
-import reactLogo from '../assets/react.svg';
-import viteLogo from '../assets/vite.svg';
 import welcomeWorkflowImg from '../assets/welcome-mail-workflow.png';
 
 const portfolioItems = [

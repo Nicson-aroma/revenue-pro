@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { useClerk, useUser } from '@clerk/react';
 import { useDarkMode } from '../context/DarkModeContext';
 import logoImage from '../assets/new-logo.png';
 
@@ -16,8 +15,6 @@ const navItems = [
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isDarkMode, toggleDarkMode } = useDarkMode();
-  const { isSignedIn } = useUser();
-  const { signOut } = useClerk();
   const location = useLocation();
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -65,6 +62,13 @@ export default function Navigation() {
           </div>
 
           <div className="hidden items-center gap-3 sm:flex">
+            <Link
+              to="/contact"
+              onClick={closeMenu}
+              className="rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:bg-purple-700"
+            >
+              Get a Free Audit
+            </Link>
             <button
               onClick={toggleDarkMode}
               className={`rounded-lg border px-3 py-2 transition hover:opacity-90 ${
@@ -76,37 +80,6 @@ export default function Navigation() {
             >
               {isDarkMode ? 'Moon' : 'Sun'}
             </button>
-            {isSignedIn ? (
-              <>
-                <Link
-                  to="/dashboard"
-                  className="rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:bg-purple-700"
-                >
-                  Dashboard
-                </Link>
-                <button
-                  onClick={() => signOut()}
-                  className="rounded-lg bg-red-600 px-4 py-2 font-semibold text-white transition hover:bg-red-700"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:bg-purple-700"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/register"
-                  className="rounded-lg bg-emerald-600 px-4 py-2 font-semibold text-white transition hover:bg-emerald-700"
-                >
-                  Sign Up
-                </Link>
-              </>
-            )}
           </div>
 
           <button
@@ -140,6 +113,15 @@ export default function Navigation() {
                   {item.name}
                 </Link>
               ))}
+              <Link
+                to="/contact"
+                onClick={closeMenu}
+                className={`block w-full py-2 text-left font-semibold ${
+                  isDarkMode ? 'text-white hover:text-purple-300' : 'text-purple-700 hover:text-purple-600'
+                }`}
+              >
+                Get a Free Audit
+              </Link>
               <button
                 onClick={() => {
                   toggleDarkMode();
@@ -151,51 +133,6 @@ export default function Navigation() {
               >
                 {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               </button>
-              {isSignedIn ? (
-                <>
-                  <Link
-                    to="/dashboard"
-                    onClick={closeMenu}
-                    className={`block w-full py-2 text-left ${
-                      isDarkMode ? 'text-gray-300 hover:text-purple-300' : 'text-gray-600 hover:text-purple-600'
-                    }`}
-                  >
-                    Dashboard
-                  </Link>
-                  <button
-                    onClick={() => {
-                      signOut();
-                      closeMenu();
-                    }}
-                    className={`block w-full py-2 text-left ${
-                      isDarkMode ? 'text-gray-300 hover:text-red-400' : 'text-gray-600 hover:text-red-600'
-                    }`}
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    onClick={closeMenu}
-                    className={`block w-full py-2 text-left ${
-                      isDarkMode ? 'text-gray-300 hover:text-purple-300' : 'text-gray-600 hover:text-purple-600'
-                    }`}
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/register"
-                    onClick={closeMenu}
-                    className={`block w-full py-2 text-left ${
-                      isDarkMode ? 'text-gray-300 hover:text-purple-300' : 'text-gray-600 hover:text-purple-600'
-                    }`}
-                  >
-                    Sign Up
-                  </Link>
-                </>
-              )}
             </motion.div>
           )}
         </AnimatePresence>

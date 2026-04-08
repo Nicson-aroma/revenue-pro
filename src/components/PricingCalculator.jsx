@@ -1,10 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function PricingCalculator({ services }) {
   const [selectedServices, setSelectedServices] = useState([]);
-  const [volume, setVolume] = useState(10000);
+  const volume = 10000;
   const [billingCycle, setBillingCycle] = useState('monthly');
 
   const calculatePrice = (service, contacts) => {
@@ -27,12 +27,10 @@ export default function PricingCalculator({ services }) {
     return price;
   };
 
-  const totalPrice = useMemo(() => {
-    return selectedServices.reduce((total, serviceId) => {
-      const service = services.find(s => s.id === serviceId);
-      return total + calculatePrice(service, volume);
-    }, 0);
-  }, [selectedServices, volume, billingCycle, services]);
+  const totalPrice = selectedServices.reduce((total, serviceId) => {
+    const service = services.find((item) => item.id === serviceId);
+    return total + calculatePrice(service, volume);
+  }, 0);
 
   const handleServiceToggle = (serviceId) => {
     setSelectedServices(prev =>
@@ -139,8 +137,8 @@ export default function PricingCalculator({ services }) {
               ) : (
                 <div className="space-y-2">
                   <AnimatePresence>
-                    {selectedServices.map((serviceId, idx) => {
-                      const service = services.find(s => s.id === serviceId);
+                    {selectedServices.map((serviceId) => {
+                      const service = services.find((item) => item.id === serviceId);
                       const price = calculatePrice(service, volume);
                       return (
                         <motion.div

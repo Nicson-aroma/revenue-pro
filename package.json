@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "npm --prefix backend run dev",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:api": "npm --prefix backend run start"
   },
   "dependencies": {
-    "@clerk/react": "^6.1.4",
     "@emailjs/browser": "^4.4.1",
     "@tailwindcss/vite": "^4.2.2",
     "framer-motion": "^12.38.0",
